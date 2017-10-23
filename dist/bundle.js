@@ -10387,7 +10387,8 @@ class Html {
 
   static appendWords(word, num) {
     let wordToAppend = `<font size=${num}em>${word}</font>`
-    $('.word-count').append(wordToAppend).append(" ")
+    $('.word-count').append(wordToAppend)
+    $('.word-count').append(" ")
   }
 }
 
@@ -10472,6 +10473,7 @@ class Listeners {
 
   static breakdownEnterListener() {
     $('.text-submission').keypress(function(event) {
+      event.preventDefault()
       if (event.which === 13) {
         $('button').trigger('click')
       }
