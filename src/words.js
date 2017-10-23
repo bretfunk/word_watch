@@ -5,8 +5,6 @@ class Words {
   }
   static getWords() {
     API.getTopWord()
-  //alert('it works!')
-
   }
 }
 
