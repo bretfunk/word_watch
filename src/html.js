@@ -5,10 +5,7 @@ class Html {
   }
 
   static appendTopWord(word, num) {
-    debugger
-
-
-    //alert('it works!')
+    $('h3').text(`Top word from Word Watch API: ${word} (${num})`)
   }
 }
 
