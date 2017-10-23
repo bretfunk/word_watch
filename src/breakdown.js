@@ -4,6 +4,7 @@ const API  = require('./api')
 class Breakdown {
   constructor() {
   }
+
   static breakdown(text) {
     let hash = {}
     text = text.toLowerCase().split(" ")

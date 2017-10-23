@@ -9,7 +9,6 @@ class Words {
     this.getWords()
     Listener.breakdownButtonListener()
     Listener.breakdownEnterListener()
-
   }
 
   static getWords() {
