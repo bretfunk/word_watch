@@ -5,10 +5,11 @@ const url = require('./url')
 class Api {
   constructor() {
   }
+
   static getTopWord() {
     $.ajax({
       method: "GET",
-      url: url() + 'top_word' //'http://localhost:3000/api/v1/top_word'
+      url: url() + 'top_word'
     })
     .then(function(data) {
       let word = Object.keys(data.word)[0]
@@ -25,7 +26,7 @@ class Api {
 
     $.ajax({
       method: "POST",
-      url:    url() + 'words', //"http://localhost:3000/api/v1/words",
+      url:    url() + 'words',
       data: data
     })
     .then(function(data) {
