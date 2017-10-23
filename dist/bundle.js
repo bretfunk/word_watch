@@ -10339,6 +10339,7 @@ class Api {
     $.ajax({
       method: "GET",
       url: url() + 'top_word'
+      //url: 'https://wordwatch-api.herokuapp.com/api/v1/top_word'
     })
     .then(function(data) {
       let word = Object.keys(data.word)[0]
@@ -10449,7 +10450,8 @@ module.exports = Words
 /***/ (function(module, exports) {
 
 function url() {
-  return 'https://localhost:3000/api/v1/'
+  //return 'https://localhost:3000/api/v1/'
+  return 'https://wordwatch-api.herokuapp.com/api/v1/'
 }
 
 module.exports = url

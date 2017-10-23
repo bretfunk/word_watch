@@ -10,6 +10,7 @@ class Api {
     $.ajax({
       method: "GET",
       url: url() + 'top_word'
+      //url: 'https://wordwatch-api.herokuapp.com/api/v1/top_word'
     })
     .then(function(data) {
       let word = Object.keys(data.word)[0]
