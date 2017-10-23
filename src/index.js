@@ -1,4 +1,6 @@
+const Words = require('./words')
+
 document.addEventListener("DOMContentLoaded", () => {
-  //first commit
+  Words.getWords()
 })
 
