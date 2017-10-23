@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10328,70 +10328,7 @@ return jQuery;
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0)
-
-class Html {
-  constructor() {
-  }
-
-  static appendTopWord(word, num) {
-    $('h3').text(`Top word from Word Watch API: ${word} (${num})`)
-  }
-
-  static appendWords(word, num) {
-    //console.log(word)
-    //console.log(num)
-    $('.word-count').append(word)
-  }
-}
-
-module.exports = Html
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(3);
-module.exports = __webpack_require__(8);
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const Words = __webpack_require__(4)
-const Listener = __webpack_require__(6)
-
-document.addEventListener("DOMContentLoaded", () => {
-  Words.getWords()
-  Listener.breakdownButtonListener()
-})
-
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const API = __webpack_require__(5)
-
-class Words {
-  constructor() {
-  }
-  static getWords() {
-    API.getTopWord()
-  }
-}
-
-module.exports = Words
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const $ = __webpack_require__(0)
-const HTML = __webpack_require__(1)
+const HTML = __webpack_require__(2)
 
 class Api {
   constructor() {
@@ -10402,19 +10339,97 @@ class Api {
       url: 'http://localhost:3000/api/v1/top_word'
     })
     .then(function(data) {
-    let word = Object.keys(data.word)[0]
-    let num  = data.word[word]
-    //debugger
-    HTML.appendTopWord(word, num)
+      let word = Object.keys(data.word)[0]
+      let num  = data.word[word]
+      HTML.appendTopWord(word, num)
     })
     .catch(function(data) {
       alert('get issue!')
+    })
+  }
+
+  static postRequest(word) {
+    let data = { word: { value: `${word}` } }
+
+    $.ajax({
+      method: "POST",
+      url:    "http://localhost:3000/api/v1/words",
+      data: data
+    })
+    .then(function(data) {
+      console.log(`${word} posted!`)
+    })
+    .catch(function(data) {
+      console.log('posting error!')
     })
   }
 }
 
 module.exports = Api
 
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const $ = __webpack_require__(0)
+
+class Html {
+  constructor() {
+  }
+
+  static appendTopWord(word, num) {
+    $('h3').text(`Top word from Word Watch API: ${word} (${num})`)
+  }
+
+  static appendWords(word, num) {
+    let wordToAppend = `<font size=${num}em>${word}</font>`
+    $('.word-count').append(wordToAppend)
+  }
+}
+
+module.exports = Html
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(4);
+module.exports = __webpack_require__(8);
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Words = __webpack_require__(5)
+const Listener = __webpack_require__(6)
+
+document.addEventListener("DOMContentLoaded", () => {
+  Words.getWords()
+  Listener.breakdownButtonListener()
+  Listener.breakdownEnterListener()
+})
+
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const API = __webpack_require__(1)
+
+class Words {
+  constructor() {
+  }
+  static getWords() {
+    API.getTopWord()
+  }
+}
+
+module.exports = Words
 
 
 /***/ }),
@@ -10429,9 +10444,19 @@ class Listeners {
   }
 
   static breakdownButtonListener() {
-    $('button').on('click', function() {
-      let text = $('textarea').val()
-      Breakdown.breakdown(text)
+    $('button').on('click', function(event) {
+      event.preventDefault()
+        let text = $('textarea').val()
+        Breakdown.breakdown(text)
+    })
+  }
+
+  static breakdownEnterListener() {
+    $('.text-submission').keypress(function(event) {
+      if (event.which === 13) {
+        //alert('enter key pressed!')
+        $('button').trigger('click')
+      }
     })
   }
 }
@@ -10443,7 +10468,8 @@ module.exports = Listeners
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const HTML = __webpack_require__(1)
+const HTML = __webpack_require__(2)
+const API  = __webpack_require__(1)
 
 class Breakdown {
   constructor() {
@@ -10452,10 +10478,8 @@ class Breakdown {
     let hash = {}
     text = text.toLowerCase().split(" ")
       text.forEach(function(word) {
-        //console.log(word)
         hash[word] ? hash[word] += 1 : hash[word] = 1
       })
-    //console.log(hash)
     this.sendWordsToHTML(hash)
   }
 
@@ -10463,9 +10487,8 @@ class Breakdown {
     let keys = Object.keys(hash)
     keys.forEach(function(word) {
       let num = hash[word]
-      //console.log(word)
-      //console.log(num)
       HTML.appendWords(word, num)
+      API.postRequest(word)
     })
   }
 }

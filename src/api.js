@@ -10,10 +10,9 @@ class Api {
       url: 'http://localhost:3000/api/v1/top_word'
     })
     .then(function(data) {
-    let word = Object.keys(data.word)[0]
-    let num  = data.word[word]
-    //debugger
-    HTML.appendTopWord(word, num)
+      let word = Object.keys(data.word)[0]
+      let num  = data.word[word]
+      HTML.appendTopWord(word, num)
     })
     .catch(function(data) {
       alert('get issue!')
@@ -21,8 +20,6 @@ class Api {
   }
 
   static postRequest(word) {
-    //console.log(word)
-    //{ word: { value: "sample" } }
     let data = { word: { value: `${word}` } }
 
     $.ajax({
