@@ -16,7 +16,6 @@ class Listeners {
   static breakdownEnterListener() {
     $('.text-submission').keypress(function(event) {
       if (event.which === 13) {
-        //alert('enter key pressed!')
         $('button').trigger('click')
       }
     })

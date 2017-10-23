@@ -10,6 +10,7 @@ class Breakdown {
       text.forEach(function(word) {
         hash[word] ? hash[word] += 1 : hash[word] = 1
       })
+    debugger
     this.sendWordsToHTML(hash)
   }
 
