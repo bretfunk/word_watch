@@ -1,4 +1,5 @@
 const HTML = require('./html')
+const API  = require('./api')
 
 class Breakdown {
   constructor() {
@@ -7,10 +8,8 @@ class Breakdown {
     let hash = {}
     text = text.toLowerCase().split(" ")
       text.forEach(function(word) {
-        //console.log(word)
         hash[word] ? hash[word] += 1 : hash[word] = 1
       })
-    //console.log(hash)
     this.sendWordsToHTML(hash)
   }
 
@@ -18,9 +17,8 @@ class Breakdown {
     let keys = Object.keys(hash)
     keys.forEach(function(word) {
       let num = hash[word]
-      //console.log(word)
-      //console.log(num)
       HTML.appendWords(word, num)
+      API.postRequest(word)
     })
   }
 }

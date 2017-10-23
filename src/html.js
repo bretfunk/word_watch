@@ -9,9 +9,8 @@ class Html {
   }
 
   static appendWords(word, num) {
-    //console.log(word)
-    //console.log(num)
-    $('.word-count').append(word)
+    let wordToAppend = `<font size=${num}em>${word}</font>`
+    $('.word-count').append(wordToAppend)
   }
 }
 
