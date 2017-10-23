@@ -1,5 +1,6 @@
 const $ = require('jQuery')
 const HTML = require('./html')
+const url = require('./url')
 
 class Api {
   constructor() {
@@ -7,7 +8,7 @@ class Api {
   static getTopWord() {
     $.ajax({
       method: "GET",
-      url: 'http://localhost:3000/api/v1/top_word'
+      url: url() + 'top_word' //'http://localhost:3000/api/v1/top_word'
     })
     .then(function(data) {
       let word = Object.keys(data.word)[0]
@@ -24,14 +25,14 @@ class Api {
 
     $.ajax({
       method: "POST",
-      url:    "http://localhost:3000/api/v1/words",
+      url:    url() + 'words', //"http://localhost:3000/api/v1/words",
       data: data
     })
     .then(function(data) {
       console.log(`${word} posted!`)
     })
     .catch(function(data) {
-      console.log('posting error!')
+      console.log(`${word} posting error!`)
     })
   }
 }
