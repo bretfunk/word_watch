@@ -19,6 +19,24 @@ class Api {
       alert('get issue!')
     })
   }
+
+  static postRequest(word) {
+    //console.log(word)
+    //{ word: { value: "sample" } }
+    let data = { word: { value: `${word}` } }
+
+    $.ajax({
+      method: "POST",
+      url:    "http://localhost:3000/api/v1/words",
+      data: data
+    })
+    .then(function(data) {
+      console.log(`${word} posted!`)
+    })
+    .catch(function(data) {
+      console.log('posting error!')
+    })
+  }
 }
 
 module.exports = Api
