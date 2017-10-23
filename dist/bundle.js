@@ -10328,7 +10328,7 @@ return jQuery;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(2);
-module.exports = __webpack_require__(6);
+module.exports = __webpack_require__(8);
 
 
 /***/ }),
@@ -10336,9 +10336,11 @@ module.exports = __webpack_require__(6);
 /***/ (function(module, exports, __webpack_require__) {
 
 const Words = __webpack_require__(3)
+const Listener = __webpack_require__(6)
 
 document.addEventListener("DOMContentLoaded", () => {
   Words.getWords()
+  Listener.breakdownButtonListener()
 })
 
 
@@ -10413,10 +10415,49 @@ module.exports = Html
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
+const $ = __webpack_require__(0)
+const Breakdown = __webpack_require__(7)
+
+class Listeners {
+  constructor() {
+  }
+
+  static breakdownButtonListener() {
+    $('button').on('click', function() {
+      Breakdown.breakdown()
+
+
+    //alert('button pressed!')
+    })
+  }
+}
+
+module.exports = Listeners
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+class Breakdown {
+  constructor() {
+  }
+  static breakdown() {
+    alert('breakdown!')
+  }
+}
+
+module.exports = Breakdown
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(7);
+var content = __webpack_require__(9);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -10424,7 +10465,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(9)(content, options);
+var update = __webpack_require__(11)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -10441,10 +10482,10 @@ if(false) {
 }
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(8)(undefined);
+exports = module.exports = __webpack_require__(10)(undefined);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700);", ""]);
 
@@ -10455,7 +10496,7 @@ exports.push([module.i, "/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 
 
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports) {
 
 /*
@@ -10537,7 +10578,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -10583,7 +10624,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(10);
+var	fixUrls = __webpack_require__(12);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -10896,7 +10937,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports) {
 
 
