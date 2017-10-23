@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10327,15 +10327,39 @@ return jQuery;
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(2);
-module.exports = __webpack_require__(8);
+const $ = __webpack_require__(0)
+
+class Html {
+  constructor() {
+  }
+
+  static appendTopWord(word, num) {
+    $('h3').text(`Top word from Word Watch API: ${word} (${num})`)
+  }
+
+  static appendWords(word, num) {
+    //console.log(word)
+    //console.log(num)
+    $('.word-count').append(word)
+  }
+}
+
+module.exports = Html
 
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Words = __webpack_require__(3)
+__webpack_require__(3);
+module.exports = __webpack_require__(8);
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Words = __webpack_require__(4)
 const Listener = __webpack_require__(6)
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -10346,10 +10370,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const API = __webpack_require__(4)
+const API = __webpack_require__(5)
 
 class Words {
   constructor() {
@@ -10363,11 +10387,11 @@ module.exports = Words
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0)
-const HTML = __webpack_require__(5)
+const HTML = __webpack_require__(1)
 
 class Api {
   constructor() {
@@ -10394,24 +10418,6 @@ module.exports = Api
 
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const $ = __webpack_require__(0)
-
-class Html {
-  constructor() {
-  }
-
-  static appendTopWord(word, num) {
-    $('h3').text(`Top word from Word Watch API: ${word} (${num})`)
-  }
-}
-
-module.exports = Html
-
-
-/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10424,10 +10430,8 @@ class Listeners {
 
   static breakdownButtonListener() {
     $('button').on('click', function() {
-      Breakdown.breakdown()
-
-
-    //alert('button pressed!')
+      let text = $('textarea').val()
+      Breakdown.breakdown(text)
     })
   }
 }
@@ -10437,13 +10441,32 @@ module.exports = Listeners
 
 /***/ }),
 /* 7 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+const HTML = __webpack_require__(1)
 
 class Breakdown {
   constructor() {
   }
-  static breakdown() {
-    alert('breakdown!')
+  static breakdown(text) {
+    let hash = {}
+    text = text.toLowerCase().split(" ")
+      text.forEach(function(word) {
+        //console.log(word)
+        hash[word] ? hash[word] += 1 : hash[word] = 1
+      })
+    //console.log(hash)
+    this.sendWordsToHTML(hash)
+  }
+
+  static sendWordsToHTML(hash) {
+    let keys = Object.keys(hash)
+    keys.forEach(function(word) {
+      let num = hash[word]
+      //console.log(word)
+      //console.log(num)
+      HTML.appendWords(word, num)
+    })
   }
 }
 
