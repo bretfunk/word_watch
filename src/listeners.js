@@ -7,10 +7,8 @@ class Listeners {
 
   static breakdownButtonListener() {
     $('button').on('click', function() {
-      Breakdown.breakdown()
-
-
-    //alert('button pressed!')
+      let text = $('textarea').val()
+      Breakdown.breakdown(text)
     })
   }
 }
