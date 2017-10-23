@@ -10454,7 +10454,6 @@ class Listeners {
   static breakdownEnterListener() {
     $('.text-submission').keypress(function(event) {
       if (event.which === 13) {
-        //alert('enter key pressed!')
         $('button').trigger('click')
       }
     })
@@ -10480,6 +10479,7 @@ class Breakdown {
       text.forEach(function(word) {
         hash[word] ? hash[word] += 1 : hash[word] = 1
       })
+    debugger
     this.sendWordsToHTML(hash)
   }
 
