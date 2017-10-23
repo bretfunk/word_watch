@@ -10329,6 +10329,7 @@ return jQuery;
 
 const $ = __webpack_require__(0)
 const HTML = __webpack_require__(2)
+const url = __webpack_require__(6)
 
 class Api {
   constructor() {
@@ -10336,7 +10337,7 @@ class Api {
   static getTopWord() {
     $.ajax({
       method: "GET",
-      url: 'http://localhost:3000/api/v1/top_word'
+      url: url() + 'top_word' //'http://localhost:3000/api/v1/top_word'
     })
     .then(function(data) {
       let word = Object.keys(data.word)[0]
@@ -10353,14 +10354,14 @@ class Api {
 
     $.ajax({
       method: "POST",
-      url:    "http://localhost:3000/api/v1/words",
+      url:    url() + 'words', //"http://localhost:3000/api/v1/words",
       data: data
     })
     .then(function(data) {
       console.log(`${word} posted!`)
     })
     .catch(function(data) {
-      console.log('posting error!')
+      console.log(`${word} posting error!`)
     })
   }
 }
@@ -10397,7 +10398,7 @@ module.exports = Html
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(4);
-module.exports = __webpack_require__(8);
+module.exports = __webpack_require__(9);
 
 
 /***/ }),
@@ -10405,12 +10406,13 @@ module.exports = __webpack_require__(8);
 /***/ (function(module, exports, __webpack_require__) {
 
 const Words = __webpack_require__(5)
-const Listener = __webpack_require__(6)
+//const Listener = require('./listeners')
 
 document.addEventListener("DOMContentLoaded", () => {
-  Words.getWords()
-  Listener.breakdownButtonListener()
-  Listener.breakdownEnterListener()
+  Words.loadPage()
+  //Words.getWords()
+  //Listener.breakdownButtonListener()
+  //Listener.breakdownEnterListener()
 })
 
 
@@ -10420,10 +10422,19 @@ document.addEventListener("DOMContentLoaded", () => {
 /***/ (function(module, exports, __webpack_require__) {
 
 const API = __webpack_require__(1)
+const Listener = __webpack_require__(7)
 
 class Words {
   constructor() {
   }
+
+  static loadPage() {
+    this.getWords()
+    Listener.breakdownButtonListener()
+    Listener.breakdownEnterListener()
+
+  }
+
   static getWords() {
     API.getTopWord()
   }
@@ -10434,10 +10445,21 @@ module.exports = Words
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports) {
+
+function url() {
+  return 'http://localhost:3000/api/v1/'
+}
+
+module.exports = url
+
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const $ = __webpack_require__(0)
-const Breakdown = __webpack_require__(7)
+const Breakdown = __webpack_require__(8)
 
 class Listeners {
   constructor() {
@@ -10464,7 +10486,7 @@ module.exports = Listeners
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const HTML = __webpack_require__(2)
@@ -10479,17 +10501,16 @@ class Breakdown {
       text.forEach(function(word) {
         hash[word] ? hash[word] += 1 : hash[word] = 1
       })
-    debugger
     this.sendWordsToHTML(hash)
   }
 
   static sendWordsToHTML(hash) {
     let keys = Object.keys(hash)
-    keys.forEach(function(word) {
-      let num = hash[word]
-      HTML.appendWords(word, num)
-      API.postRequest(word)
-    })
+      keys.forEach(function(word) {
+        let num = hash[word]
+        HTML.appendWords(word, num)
+        API.postRequest(word)
+      })
   }
 }
 
@@ -10497,13 +10518,13 @@ module.exports = Breakdown
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(9);
+var content = __webpack_require__(10);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -10511,7 +10532,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(11)(content, options);
+var update = __webpack_require__(12)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -10528,10 +10549,10 @@ if(false) {
 }
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)(undefined);
+exports = module.exports = __webpack_require__(11)(undefined);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700);", ""]);
 
@@ -10542,7 +10563,7 @@ exports.push([module.i, "/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 /*
@@ -10624,7 +10645,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -10670,7 +10691,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(12);
+var	fixUrls = __webpack_require__(13);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -10983,7 +11004,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 
